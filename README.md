@@ -4,6 +4,7 @@ See the top movies on Netflix by Rottentomato.com score
 ## How it works
 This is an in-progress script so it requires quite a few manual steps (these will be automated soon!)
 
+### Collect the data (manual process)
 1. Log in to Netflix.com
 2. Click on `movies`
 3. Press and hold the `pg dn` button on your keyboard until no more movie are loaded  
@@ -17,6 +18,8 @@ This is an in-progress script so it requires quite a few manual steps (these wil
 11. Repeat steps 4-6
 12. Open the file `rotten.html` and paste the data collected in the previous step
 13. Save the file
+
+### Generate the Report (automated)
 14. Open a terminal window
 15. In the terminal window type `python netrot.py`
 16. View your top movies by opening the file `top_movies_today.txt`
