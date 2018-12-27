@@ -53,17 +53,35 @@ def extractAndRankMovies():
     #movie_rankings = getMovieRanking() --old method to get rank
     movie_rankings = getRottenData() #using Rotten Tomatoe Netflix Data
     for movie, rank in movie_rankings.items():
+        rank = rank.replace("%", "")
         if movie.lower() in netflix_list:
-            top_movies.append([movie, rank])
+            top_movies.append([movie, int(rank)])
 
     top_movies.sort(key=lambda x: x[1], reverse=True)
     return top_movies
 
 def saveMoviesToFile():
     movies_to_save = extractAndRankMovies()
-    with open('top_movies_today.txt','w') as outfile:
-        for movie, rank in movies_to_save:
-            outfile.write(f"{movie:.<30}\t{rank:.5}\n")
+    new_list = "<ul>"
+    raw_table = ""
+    count = 1
+    for movie, rank in movies_to_save:
+        new_list += f'''<tr>\n
+        <th scope="row">{count}</th>\n
+        <td>{movie}</td>\n
+        <td>{rank}%</td>\n
+        </tr>\n'''
+        raw_table += f"{count:.<4}{movie:.<50}{rank}\n"
+        count+=1
+    with open("template.html","r") as outfile:
+        string = outfile.read()
+        updated = string.format(freshdata=new_list)
+        with open("index.html", "w") as savefile:
+            savefile.write(updated)
+    with open('rawdata.txt', 'w') as rawfile:
+        rawfile.write(raw_table)
 
 if __name__ == "__main__":
     saveMoviesToFile()
+
+
